@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Speed Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #text-to-type {
+            font-size: 20px;
+            margin-bottom: 30px;
+            margin-top: 20px;
+        }
+        textarea {
+            width: 80%;
+            height: 100px;
+            font-size: 16px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .result {
+            font-size: 20px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Typing Speed Test</h1>
+    
+    <div id="text-to-type">
+        <p>Type the following text as quickly as you can:</p>
+        <p id="text-example">{{ random_text }}</p> <!-- Display the random text here -->
+    </div>
+
+    <form method="POST">
+        <textarea name="typed_text" placeholder="Start typing here..." required></textarea><br>
+        <input type="hidden" id="start-time" name="start_time" value="{{ current_time }}">
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if wpm is not none %}
+        <div class="result">
+            <p>Typing speed: {{ wpm }} words per minute (WPM)</p>
+            <p>Time taken: {{ time_taken }} seconds</p>
+            <p>Typed text: {{ typed_text }}</p>
+        </div>
+    {% endif %}
+
+    <script>
+        let startTime = { current_time };  // Pass current_time from backend into JavaScript
+
+        document.querySelector('textarea').addEventListener('focus', function() {
+            document.getElementById('start-time').value = startTime;
+        });
+    </script>
+</body>
+</html>
